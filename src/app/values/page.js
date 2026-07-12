@@ -1,5 +1,4 @@
-import Link from 'next/link';
-import { getContent } from '@/lib/data';
+import Link from 'next/link'
 
 const swatches = [
   { name: 'Warm Cream', color: '#F8F4EC' },
@@ -10,24 +9,28 @@ const swatches = [
   { name: 'Taupe', color: '#B3A497' },
   { name: 'Warm Brown', color: '#8B6F47' },
   { name: 'Charcoal', color: '#4F4A48' },
-];
+]
 
 export default function ValuesPage() {
-  const c = getContent();
-  if (!c) return <div className="section"><div className="container"><p>Content not found.</p></div></div>;
-
   return (
     <>
       <section className="section" style={{ paddingTop: 160, background: '#F1EBE0' }}>
-        <div className="container">
-          <h1 className="section-title center">{c.values.title}</h1>
-          <p className="section-subtitle center">{c.values.subtitle}</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 32, marginTop: 48 }}>
-            {c.values.items.map((v, i) => (
-              <div key={i} style={{ textAlign: 'center', padding: '40px 24px', background: '#F8F4EC', border: '1px solid rgba(179,164,151,0.15)', borderRadius: 2, transition: 'transform 0.3s, box-shadow 0.3s' }} className="value-card-hover">
-                <div style={{ width: 64, height: 64, margin: '0 auto 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', background: '#F1EBE0', fontSize: '1.8rem' }}>{v.icon}</div>
-                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.35rem', fontWeight: 500, color: '#4F4A48', marginBottom: 12 }}>{v.title}</h3>
-                <p style={{ fontFamily: 'var(--font-editorial)', fontSize: '0.95rem', color: '#B3A497', lineHeight: 1.7 }}>{v.description}</p>
+        <div className="container" style={{ textAlign: 'center', maxWidth: 700 }}>
+          <h1 className="section-title center">What She Stands For</h1>
+          <p className="section-subtitle center" style={{ margin: '0 auto 48px' }}>Six words that guide every song, every story, every page.</p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 24 }}>
+            {[
+              { icon: '🕰️', title: 'Timeless', desc: 'Songs that reach for the eternal.' },
+              { icon: '🌸', title: 'Feminine', desc: 'Unapologetically soft. No armor required.' },
+              { icon: '📖', title: 'Authentic', desc: 'Real stories, real feelings, real mess.' },
+              { icon: '☕', title: 'Comforting', desc: 'Like a porch light left on.' },
+              { icon: '🏡', title: 'Country', desc: 'Roots in the land and the porch.' },
+              { icon: '✒️', title: 'Literary', desc: 'Lyrics worth reading like prose.' },
+            ].map((v, i) => (
+              <div key={i} style={{ padding: '24px 16px', background: '#F8F4EC', border: '1px solid rgba(179,164,151,0.15)', borderRadius: 2 }}>
+                <div style={{ fontSize: '2rem', marginBottom: 12 }}>{v.icon}</div>
+                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', fontWeight: 500, color: '#4F4A48', marginBottom: 8 }}>{v.title}</h3>
+                <p style={{ fontFamily: 'var(--font-editorial)', fontSize: '0.85rem', color: '#B3A497', lineHeight: 1.7 }}>{v.desc}</p>
               </div>
             ))}
           </div>
@@ -37,34 +40,17 @@ export default function ValuesPage() {
       <section className="section" style={{ background: '#F8F4EC', textAlign: 'center' }}>
         <div className="container">
           <h2 className="section-title center">The Color of Comfort</h2>
-          <p className="section-subtitle center">A palette drawn from the porch, the garden, and the golden hour.</p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 12, marginTop: 48 }}>
+          <p className="section-subtitle center" style={{ margin: '0 auto 48px' }}>A palette drawn from the porch, the garden, and the golden hour.</p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 12 }}>
             {swatches.map((s, i) => (
               <div key={i} style={{ width: 140, height: 140, borderRadius: 2, display: 'flex', alignItems: 'flex-end', padding: 12, background: s.color, transition: 'transform 0.3s' }}>
                 <span style={{ background: 'rgba(255,255,255,0.85)', padding: '4px 10px', borderRadius: 2, color: '#4F4A48', fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.05em' }}>{s.name}</span>
               </div>
             ))}
           </div>
+          <Link href="/music" className="btn btn-primary" style={{ marginTop: 48, display: 'inline-block' }}>Experience the Music</Link>
         </div>
       </section>
-
-      <section className="section" style={{ background: '#F1EBE0', textAlign: 'center' }}>
-        <div className="container">
-          <h2 className="section-title center">Guided by These Values</h2>
-          <p className="section-subtitle center">Every creative decision, every lyric, every design choice — rooted in this foundation.</p>
-          <Link href="/music" className="btn btn-primary">Experience the Music</Link>
-        </div>
-      </section>
-
-      <style>{`
-        .value-card-hover:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(79,74,72,0.08)}
-        @media(max-width:768px){
-          div[style*="grid-template-columns"]{grid-template-columns:repeat(2,1fr)!important}
-        }
-        @media(max-width:480px){
-          div[style*="grid-template-columns"]{grid-template-columns:1fr!important}
-        }
-      `}</style>
     </>
-  );
+  )
 }

@@ -1,10 +1,23 @@
-const nextConfig = {
-  experimental: {
-    serverActions: {
-      bodySizeLimit: '10mb',
-    },
-  },
-  outputFileTracingRoot: process.cwd(),
-};
+const securityHeaders = [
+  { key: 'X-DNS-Prefetch-Control', value: 'on' },
+  { key: 'X-Content-Type-Options', value: 'nosniff' },
+  { key: 'X-Frame-Options', value: 'DENY' },
+  { key: 'X-XSS-Protection', value: '1; mode=block' },
+  { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+]
 
-export default nextConfig;
+const nextConfig = {
+  async headers() {
+    return [
+      { source: '/(.*)', headers: securityHeaders },
+    ]
+  },
+  images: {
+    remotePatterns: [
+      { protocol: 'https', hostname: '**.blob.vercel-storage.com' },
+      { protocol: 'https', hostname: '**.public.blob.vercel-storage.com' },
+    ],
+  },
+}
+
+export default nextConfig
