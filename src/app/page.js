@@ -1,4 +1,4 @@
-import prisma from '@/lib/prisma'
+import db from '@/lib/prisma'
 import HeroSection from '@/components/sections/HeroSection'
 import PorchLightSection from '@/components/sections/PorchLightSection'
 import StorySection from '@/components/sections/StorySection'
@@ -25,9 +25,11 @@ export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
   let sections = []
-  try {
-    sections = await prisma.section.findMany({ where: { pageId: 'home' }, orderBy: { order: 'asc' } })
-  } catch {}
+  if (db) {
+    try {
+      sections = await db.section.findMany({ where: { pageId: 'home' }, orderBy: { order: 'asc' } })
+    } catch {}
+  }
 
   if (sections.length === 0) {
     return (
